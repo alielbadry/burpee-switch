@@ -64,23 +64,23 @@ containers** in the popup for names, colors, icons, site rules, and tab indicato
 
 ## Burp Suite
 
-Enable **Burp Suite headers** in the options page to add `X-Container-Name`, `X-Container-Color`, and
-`X-Container-Tab` to proxied requests. To color Burp's proxy history automatically, download and load
-the [highlighter JAR](https://github.com/alielbadry/burpee-switch/releases/latest/download/containers-burp-highlighter.jar)
-as a Java extension in Burp.
+The highlighter colors Burp Proxy HTTP history rows using the container headers added by the browser
+extension.
 
-The headers are visible to the destination site, so enable them only while testing.
+1. Download the [highlighter JAR](https://github.com/alielbadry/burpee-switch/releases/latest/download/containers-burp-highlighter.jar).
+2. In Burp Suite, open **Extensions → Installed**.
+3. Click **Add**.
+4. Set **Extension type** to **Java**.
+5. Click **Select file...**, choose `containers-burp-highlighter.jar`, then click **Next**.
+6. Confirm that **Container Color Highlighter** appears in the installed extensions list without
+   errors.
+7. In BURPEE-SWITCH, open **Options** and enable **Burp Suite headers**.
+8. Proxy your browser through Burp and browse in a non-Default container. Requests include
+   `X-Container-Name`, `X-Container-Color`, and `X-Container-Tab`; matching proxy history rows are
+   highlighted and annotated with the container name and tab ID.
 
-## Development
-
-No build step. Edit the source and click **Reload** on `chrome://extensions`.
-
-```powershell
-npm run check     # manifest, JavaScript syntax, icon dimensions, HTML references
-npm run icons     # regenerate icons from icons/burpee-switch-master.png
-```
-
-If PowerShell blocks `npm.ps1`, use `npm.cmd run check`.
+Requires Burp Suite 2024.12 or later. The headers are visible to the destination site, so enable
+them only while testing.
 
 ## License
 
