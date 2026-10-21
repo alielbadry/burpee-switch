@@ -4,16 +4,6 @@ BURPEE-SWITCH Multi-account and container management for Chromium-based browsers
 lets users manage multiple isolated browsing containers and switch between accounts in the same
 browser window, instead of opening separate browser profiles.
 
-BURPEE-SWITCH is a Firefox Multi-Account Containers-style extension for Chrome and other Chromium
-browsers. Create color-coded identities, open tabs in them, assign domains to them, and keep
-separate cookie jars per identity.
-
-The icon, popup, and options page use the BURPEE-SWITCH charcoal-and-orange identity.
-
-Chromium has no `contextualIdentities` API, so this is **not** true per-tab isolation. It is a
-carefully implemented **cookie-jar swapping** extension: one container is live at a time, and the
-extension snapshots and restores `chrome.cookies` when you switch. The limitations are documented
-below.
 
 ## Features
 
