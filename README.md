@@ -1,6 +1,6 @@
 # BURPEE-SWITCH
 
-BURPEE-SWITCH Multi-account and container management for Chromium-based browsers extension that
+BURPEE-SWITCH Multi-account and container management for Chromium-based browsers that
 lets users manage multiple isolated browsing containers and switch between accounts in the same
 browser window, instead of opening separate browser profiles.
 
