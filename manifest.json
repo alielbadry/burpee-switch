@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "BURPEE-SWITCH",
+  "version": "0.4.0",
+  "description": "BURPEE-SWITCH Multi-account and container management for Chromium-based browsers",
+  "minimum_chrome_version": "119",
+  "permissions": [
+    "cookies",
+    "tabs",
+    "tabGroups",
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/container-visual.js"],
+      "css": ["content/container-visual.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "BURPEE-SWITCH",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

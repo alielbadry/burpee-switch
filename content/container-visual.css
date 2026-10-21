@@ -1,0 +1,78 @@
+#container-page-edge {
+  all: initial !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28) !important;
+}
+
+#container-page-edge .ce-label {
+  all: initial !important;
+  position: fixed !important;
+  top: 4px !important;
+  right: 0 !important;
+  display: block !important;
+  max-width: 200px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+  padding: 2px 7px 3px !important;
+  border: 0 !important;
+  border-radius: 0 0 0 6px !important;
+  background: inherit !important;
+  color: #ffffff !important;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.01em !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  opacity: 0.92 !important;
+  z-index: 2147483647 !important;
+}
+
+#container-page-edge.ce-color-grey {
+  background: #5f6368 !important;
+}
+
+#container-page-edge.ce-color-blue {
+  background: #1a73e8 !important;
+}
+
+#container-page-edge.ce-color-red {
+  background: #d93025 !important;
+}
+
+#container-page-edge.ce-color-yellow {
+  background: #f9ab00 !important;
+}
+
+#container-page-edge.ce-color-green {
+  background: #188038 !important;
+}
+
+#container-page-edge.ce-color-pink {
+  background: #d01884 !important;
+}
+
+#container-page-edge.ce-color-purple {
+  background: #9334e6 !important;
+}
+
+#container-page-edge.ce-color-cyan {
+  background: #007b83 !important;
+}
+
+#container-page-edge.ce-color-orange {
+  background: #e8710a !important;
+}

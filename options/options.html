@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BURPEE-SWITCH — Settings</title>
+  <link rel="icon" type="image/png" href="../icons/icon48.png">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="header-band">
+    <header class="page-header">
+      <div class="brand">
+        <img class="brand-icon" src="../icons/icon128.png" alt="">
+        <div class="brand-copy">
+          <div class="brand-lockup">
+            <h1>BURPEE-SWITCH</h1>
+            <span class="brand-dot" aria-hidden="true">•</span>
+          </div>
+          <h2 class="tagline">One Browser. Multiple Identities.</h2>
+          <p class="tagline-support">Keep your accounts separate. Switch without switching browsers.</p>
+        </div>
+      </div>
+      <div class="live-chip" id="liveChip">ACTIVE TAB: —</div>
+    </header>
+  </div>
+
+  <main>
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>Containers</h2>
+          <p class="muted">
+            Each container keeps its own saved cookie jar. The active container's cookies live in the browser;
+            the others are stored by the extension.
+          </p>
+        </div>
+      </div>
+      <div id="containerRows" class="container-rows"></div>
+
+      <div class="add-row">
+        <input id="newIcon" class="input icon-input" type="text" maxlength="8" value="📦" aria-label="New container icon">
+        <input id="newName" class="input name-input" type="text" maxlength="24" placeholder="New container name" aria-label="New container name">
+        <select id="newColor" class="input color-input" aria-label="New container color"></select>
+        <button id="addContainer" class="btn primary" type="button">Add container</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>Site assignments</h2>
+          <p class="muted">
+            Pages on an assigned domain open in that container automatically. More specific domains win.
+          </p>
+        </div>
+      </div>
+      <div id="ruleRows" class="rule-rows"></div>
+
+      <div class="add-row rule-form">
+        <input id="ruleDomain" class="input name-input" type="text" placeholder="example.com" aria-label="Domain to assign">
+        <select id="ruleContainer" class="input rule-container" aria-label="Container for domain"></select>
+        <button id="addRule" class="btn primary" type="button">Assign domain</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>Behavior</h2>
+          <p class="muted">
+            Grouping is off by default. Chrome and Brave cannot color individual tabs —
+            tab-strip colors are only available inside tab groups. With grouping off, the
+            toolbar icon stays the brand logo and tab markers identify containers.
+          </p>
+        </div>
+      </div>
+      <label class="toggle-row">
+        <span>
+          <strong>Group tabs by container</strong>
+          <span class="muted block">Off by default. Colors require tab groups; without groups the brand logo stays in the toolbar.</span>
+        </span>
+        <input id="groupTabs" type="checkbox" class="switch">
+      </label>
+      <div class="inline-actions">
+        <button id="regroupBtn" class="btn ghost" type="button">Regroup all tabs now</button>
+        <button id="ungroupBtn" class="btn ghost" type="button">Remove container groups</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>Tab indicators</h2>
+          <p class="muted">
+            Mark container tabs without groups. Favicon and title markers are applied inside web pages;
+            Chrome and Brave internal pages are not modified.
+          </p>
+        </div>
+      </div>
+      <div class="indicator-row">
+        <label for="tabMarker">Tab marker</label>
+        <select id="tabMarker" class="input">
+          <option value="off">Off</option>
+          <option value="favicon-dot">Favicon dot (keeps site icon)</option>
+          <option value="favicon-tile">Favicon tile (color + initial)</option>
+          <option value="title-emoji">Title emoji (🟦 Site)</option>
+          <option value="favicon-title">Site icon + badge + title (full container name)</option>
+        </select>
+      </div>
+      <label class="toggle-row">
+        <span>
+          <strong>Color tab edge</strong>
+          <span class="muted block">
+            Thin color bar and full container name at the top of every web page.
+          </span>
+        </span>
+        <input id="pageEdge" type="checkbox" class="switch">
+      </label>
+      <label class="toggle-row">
+        <span>
+          <strong>Tint toolbar icon</strong>
+          <span class="muted block">Use a colored icon with the container initial instead of the brand logo.</span>
+        </span>
+        <input id="toolbarIcon" type="checkbox" class="switch">
+      </label>
+      <label class="toggle-row">
+        <span>
+          <strong>Burp Suite headers</strong>
+          <span class="muted block">
+            Add X-Container-Name, X-Container-Color, and X-Container-Tab to requests from colored
+            tabs.
+          </span>
+        </span>
+        <input id="burpHeaders" type="checkbox" class="switch">
+      </label>
+      <div class="inline-actions">
+        <button id="applyMarkersBtn" class="btn ghost" type="button">Apply to open tabs</button>
+      </div>
+      <p class="hint">
+        Favicon markers keep the site icon when the browser allows it; the dot adds a colored dot,
+        while the title marker adds a colored initial badge and prefixes the full container name. If
+        the icon cannot be read, a colored tile is used instead. Title markers change the page title.
+        Burp headers only appear when traffic goes through a proxy; custom headers can affect
+        cross-origin requests.
+      </p>
+    </section>
+
+    <section class="card about-card">
+      <div class="about-brand">
+        <img class="about-icon" src="../icons/icon128.png" alt="">
+        <div>
+          <span class="about-kicker">Multi-account workspace</span>
+          <h2>About <span class="brand-accent">BURPEE-SWITCH</span></h2>
+        </div>
+      </div>
+      <p class="about-lead">
+        BURPEE-SWITCH Multi-account and container management for Chromium-based browsers extension
+        that lets users manage multiple isolated browsing containers and switch between accounts in
+        the same browser window, instead of opening separate browser profiles.
+      </p>
+      <ul class="about-list">
+        <li>Open or move tabs into a container from the toolbar popup or context menu.</li>
+        <li>Assign domains, group tabs by container, and choose the tab indicator that fits your flow.</li>
+        <li>Send container labels to Burp Suite when you need to trace proxied traffic.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BURPEE-SWITCH</title>
+  <link rel="icon" type="image/png" href="../icons/icon48.png">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-icon" src="../icons/icon48.png" alt="">
+      <div class="brand-text">
+        <h1>BURPEE-SWITCH</h1>
+        <p id="currentLine">Loading…</p>
+      </div>
+    </div>
+    <button id="settingsBtn" class="icon-btn" type="button" title="Manage containers" aria-label="Manage containers">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+        <path fill="currentColor" d="M19.14 12.94a7.6 7.6 0 0 0 .05-.94 7.6 7.6 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.1 7.1 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.56-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.03.31-.05.62-.05.94s.02.63.05.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.13.23.4.32.6.22l2.39-.96c.5.38 1.04.7 1.63.94l.36 2.54c.04.24.25.42.5.42h3.84c.25 0 .46-.18.5-.42l.36-2.54c.59-.24 1.13-.56 1.63-.94l2.39.96c.2.1.47.01.6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7Z"/>
+      </svg>
+    </button>
+  </header>
+
+  <section id="incognitoNotice" class="notice hidden">
+    BURPEE-SWITCH is unavailable in incognito windows. Open a normal window to switch identities.
+  </section>
+
+  <main>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Open a container tab</h2>
+        <span id="liveHint" class="hint"></span>
+      </div>
+      <ul id="containerList" class="container-list" aria-label="Containers"></ul>
+    </section>
+
+    <section class="panel" id="sitePanel">
+      <h2>This site</h2>
+      <p id="domainLine" class="domain">No site loaded</p>
+      <div class="field">
+        <label class="label" for="siteContainer">Always open in</label>
+        <select id="siteContainer"></select>
+      </div>
+      <div class="actions">
+        <button id="applyRule" class="btn primary" type="button">Assign site</button>
+        <button id="clearRule" class="btn ghost" type="button">Remove</button>
+      </div>
+      <p id="ruleNote" class="rule-note"></p>
+      <label class="storage-toggle">
+        <span>
+          <strong>Isolate login storage</strong>
+          <span class="storage-hint">For sites that keep sign-in tokens in localStorage instead of cookies.</span>
+        </span>
+        <input id="isolateStorage" type="checkbox">
+      </label>
+    </section>
+
+    <p class="swap-note">
+      Containers keep separate cookies. For sites that keep logins in localStorage, enable Isolate
+      login storage. A tab may reload once when it first loads under a container; later switches are
+      instant.
+    </p>
+  </main>
+
+  <footer>
+    <button id="regroupBtn" class="btn ghost" type="button">Regroup tabs</button>
+    <span class="footer-spacer"></span>
+    <button id="manageBtn" class="btn ghost" type="button">Manage containers</button>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

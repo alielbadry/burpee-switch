@@ -1,0 +1,13 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Burp extension build output
+burp-extension/.build/
+burp-extension/dist/
