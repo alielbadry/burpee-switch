@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BURPEE-SWITCH — Multiple accounts. One browser.</title>
+  <meta name="description" content="Container-style accounts for Chrome, Brave, and Edge. Keep work, personal, and client logins separate in one browser window.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="icon" type="image/png" href="icons/icon48.png">
+  <style>
+    :root {
+      --bg: #0b0b0d;
+      --bg-2: #121116;
+      --panel: #151519;
+      --panel-2: #1b1a20;
+      --text: #f5f1ed;
+      --muted: #a39da6;
+      --line: #2a2930;
+      --accent: #ff5a36;
+      --accent-soft: #2d1712;
+      --max: 1120px;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(700px 440px at 78% 8%, rgba(255, 90, 54, .14), transparent 62%),
+        radial-gradient(560px 420px at 6% 28%, rgba(255, 90, 54, .06), transparent 65%),
+        var(--bg);
+      color: var(--text);
+      font: 15px/1.6 "Segoe UI", system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .wrap { width: min(var(--max), calc(100% - 44px)); margin: 0 auto; }
+    .top {
+      position: sticky; top: 0; z-index: 20;
+      border-bottom: 1px solid rgba(42, 41, 48, .8);
+      background: rgba(11, 11, 13, .82);
+      backdrop-filter: blur(16px);
+    }
+    .top-in { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: .02em; font-size: 14px; }
+    .brand img { width: 30px; height: 30px; border-radius: 9px; box-shadow: 0 0 26px rgba(255, 90, 54, .25); }
+    .brand b { color: var(--accent); }
+    nav { display: flex; align-items: center; gap: 24px; font-size: 13px; color: var(--muted); }
+    nav a:hover { color: var(--text); }
+    .gh {
+      display: inline-flex; align-items: center; gap: 7px;
+      border: 1px solid var(--line); border-radius: 9px;
+      padding: 7px 12px; color: var(--text); background: var(--panel);
+    }
+    .hero { padding: 78px 0 34px; text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #41231b; background: rgba(45, 23, 18, .7);
+      color: #ffb7a4; border-radius: 99px; padding: 6px 13px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 99px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+    h1 { margin: 22px 0 14px; font-size: clamp(44px, 7vw, 76px); line-height: .98; letter-spacing: -.045em; font-weight: 800; }
+    h1 span { color: var(--accent); }
+    .lede { max-width: 620px; margin: 0 auto; color: var(--muted); font-size: 17px; }
+    .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 11px; margin: 27px 0 13px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 0 19px; border-radius: 10px;
+      font-weight: 700; font-size: 13px; border: 1px solid transparent;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #1a0a06; box-shadow: 0 12px 34px rgba(255, 90, 54, .22); }
+    .btn-primary:hover { background: #ff6d4c; }
+    .btn-secondary { background: var(--panel); border-color: var(--line); color: var(--text); }
+    .btn-secondary:hover { background: var(--panel-2); border-color: #3a3842; }
+    .fine { color: #77717a; font-size: 11px; letter-spacing: .02em; }
+    .demo {
+      margin: 26px auto 0; max-width: 980px;
+      padding: 8px; border: 1px solid #2e2b33; border-radius: 22px;
+      background: linear-gradient(180deg, rgba(38, 34, 40, .9), rgba(20, 19, 24, .9));
+      box-shadow: 0 40px 100px rgba(0, 0, 0, .5), 0 0 120px rgba(255, 90, 54, .08);
+    }
+    .demo img { border-radius: 15px; }
+    section { padding: 74px 0; }
+    .head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+    .head h2 { margin: 0; font-size: 34px; letter-spacing: -.03em; }
+    .head p { margin: 0; color: var(--muted); max-width: 460px; font-size: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .card {
+      background: linear-gradient(180deg, rgba(28, 26, 32, .8), rgba(20, 19, 24, .8));
+      border: 1px solid var(--line); border-radius: 15px; padding: 21px;
+    }
+    .card .ico {
+      width: 35px; height: 35px; border-radius: 10px; display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent); border: 1px solid #45251d;
+      font-size: 15px; font-weight: 800; margin-bottom: 14px;
+    }
+    .card h3 { margin: 0 0 6px; font-size: 14px; letter-spacing: -.01em; }
+    .card p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; counter-reset: step; }
+    .step { position: relative; border-top: 2px solid var(--accent); background: rgba(21, 21, 25, .7); padding: 22px 20px; border-radius: 0 0 14px 14px; }
+    .step:before {
+      counter-increment: step; content: "0" counter(step);
+      color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .12em;
+    }
+    .step h3 { margin: 10px 0 5px; font-size: 15px; }
+    .step p { margin: 0; color: var(--muted); font-size: 12.5px; }
+    .install { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: center; }
+    .install h2 { margin: 0 0 10px; font-size: 34px; letter-spacing: -.03em; }
+    .install p { color: var(--muted); margin: 0 0 18px; }
+    ol.install-list { margin: 0; padding-left: 20px; color: #d4cdd3; font-size: 13px; }
+    ol.install-list li { margin: 7px 0; }
+    code, pre { font-family: "Cascadia Code", Consolas, monospace; }
+    code { color: #ffb7a4; font-size: .92em; }
+    pre {
+      margin: 0; padding: 18px 19px; border: 1px solid var(--line); border-radius: 13px;
+      background: #0e0e11; color: #d8d2d8; font-size: 12px; overflow: auto; line-height: 1.7;
+    }
+    .burp {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      border: 1px solid #43261e; border-radius: var(--radius); padding: 25px 27px;
+      background: linear-gradient(110deg, rgba(45, 23, 18, .75), rgba(21, 21, 25, .7));
+    }
+    .burp h2 { margin: 0 0 5px; font-size: 21px; }
+    .burp p { margin: 0; color: var(--muted); font-size: 13px; max-width: 650px; }
+    footer { border-top: 1px solid var(--line); padding: 26px 0 38px; color: #77717a; font-size: 11.5px; }
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .foot a { color: #a39da6; }
+    .foot a:hover { color: var(--text); }
+    @media (max-width: 860px) {
+      .grid, .steps { grid-template-columns: 1fr 1fr; }
+      .install { grid-template-columns: 1fr; }
+      nav a:not(.gh) { display: none; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      .hero { padding-top: 52px; }
+      h1 { font-size: 46px; }
+      .lede { font-size: 15px; }
+      .grid, .steps { grid-template-columns: 1fr; }
+      .head { display: block; }
+      .head p { margin-top: 8px; }
+      .burp { display: block; }
+      .burp .btn { margin-top: 16px; }
+      .demo { padding: 5px; border-radius: 16px; }
+      section { padding: 54px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="./"><img src="icons/icon48.png" alt="">BURPEE<b>-</b>SWITCH</a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a class="gh" href="https://github.com/alielbadry/burpee-switch" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow"><i></i> Container-style identities for Chromium</span>
+        <h1>Multiple accounts.<br><span>One browser.</span></h1>
+        <p class="lede">Keep work, personal, and client logins open side by side. BURPEE-SWITCH gives every tab its own container, cookies, and visual label — without separate browser profiles.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#install">Install extension</a>
+          <a class="btn btn-secondary" href="https://github.com/alielbadry/burpee-switch/releases/latest/download/containers-burp-highlighter.jar" target="_blank" rel="noopener">Download Burp JAR</a>
+        </div>
+        <div class="fine">Free · Open source · MIT · Runs locally</div>
+        <div class="demo">
+          <img src="docs/demo.gif" width="1000" height="633" alt="BURPEE-SWITCH demo: open a Personal tab, sign in as Alice, open a Work tab as Bob, and switch between them.">
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="head">
+          <h2>Built for switching.</h2>
+          <p>Simple on the surface. Isolated cookies and optional login-storage separation underneath.</p>
+        </div>
+        <div class="grid">
+          <div class="card"><div class="ico">01</div><h3>Separate accounts</h3><p>Use the same site as different users in one window. Each tab keeps its container identity.</p></div>
+          <div class="card"><div class="ico">02</div><h3>Separate cookies</h3><p>Every container has its own saved session. Switching tabs restores the right cookie jar.</p></div>
+          <div class="card"><div class="ico">03</div><h3>Login-storage isolation</h3><p>For sites that keep tokens in <code>localStorage</code>, enable one toggle and sign in once per container.</p></div>
+          <div class="card"><div class="ico">04</div><h3>Instant switching</h3><p>Already-loaded tabs switch without a page reload. A tab may reload once on its first container load.</p></div>
+          <div class="card"><div class="ico">05</div><h3>Visual labels</h3><p>Colored dots, tab titles, optional tab groups, and a page edge make the active container obvious.</p></div>
+          <div class="card"><div class="ico">06</div><h3>Burp ready</h3><p>Optional request headers tag proxy traffic by container. The highlighter JAR colors Burp history rows.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="head">
+          <h2>Three steps.</h2>
+          <p>No profile juggling. No second browser. Just pick a container and sign in.</p>
+        </div>
+        <div class="steps">
+          <div class="step"><h3>Open a container</h3><p>Click the toolbar icon, then <strong>Open</strong> next to Personal, Work, or a container you create.</p></div>
+          <div class="step"><h3>Sign in once</h3><p>Log in to the site in that tab. Repeat in another container with your second account.</p></div>
+          <div class="step"><h3>Switch tabs</h3><p>Each tab keeps its own account. Use <strong>Move</strong> when a tab belongs in another container.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap install">
+        <div>
+          <h2>Install unpacked.</h2>
+          <p>BURPEE-SWITCH is distributed as source. Clone it, load it in developer mode, and pin it to the toolbar.</p>
+          <ol class="install-list">
+            <li>Open <code>chrome://extensions</code> (or <code>brave://extensions</code>, <code>edge://extensions</code>).</li>
+            <li>Turn on <strong>Developer mode</strong>.</li>
+            <li>Click <strong>Load unpacked</strong> and select the project folder.</li>
+            <li>Pin BURPEE-SWITCH to the toolbar.</li>
+          </ol>
+        </div>
+        <pre><span style="color:#77717a"># Clone the repository</span>
+git clone https://github.com/alielbadry/burpee-switch.git
+
+<span style="color:#77717a"># Then load the folder as an unpacked extension</span>
+cd burpee-switch</pre>
+      </div>
+    </section>
+
+    <section id="burp">
+      <div class="wrap">
+        <div class="burp">
+          <div>
+            <h2>Using Burp Suite?</h2>
+            <p>Enable <strong>Burp Suite headers</strong> in the options page to tag requests with the container name, color, and tab ID. Load the highlighter JAR to color Proxy history rows automatically.</p>
+          </div>
+          <a class="btn btn-secondary" href="https://github.com/alielbadry/burpee-switch/releases/latest/download/containers-burp-highlighter.jar" target="_blank" rel="noopener">Get the JAR</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>BURPEE-SWITCH · Multiple accounts. One browser. · <a href="LICENSE">MIT</a></div>
+      <div><a href="https://github.com/alielbadry/burpee-switch" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/alielbadry/burpee-switch/releases" target="_blank" rel="noopener">Releases</a></div>
+    </div>
+  </footer>
+</body>
+</html>
