@@ -17,25 +17,22 @@ below.
 
 ## Features
 
-- Virtual containers with a name, color, and icon.
-- Open a new tab in any container from the toolbar popup or the link/page context menu.
-- Move the current tab to another container.
-- Links opened from a container tab stay in that container.
-- Site assignments: always open a domain in a specific container.
-- Optional tab groups per container, color matched to the container (off by default).
-- Tab markers without groups: colored favicon dot, colored favicon tile, colored title emoji, or
-  site icon plus a colored initial badge and the full container name in the title.
-- Color tab edge: a thin container-colored bar and full container name at the top of every web
-  page (enabled by default).
-- Optional tinted toolbar icon with the container initial; the brand logo stays in the toolbar
-  otherwise.
-- Optional per-tab request headers (`X-Container-Name`, `X-Container-Color`, `X-Container-Tab`) so
-  Burp Suite proxy history identifies the originating container.
-- Cookie jar snapshot/restore with crash recovery markers.
-- Optional per-site localStorage isolation for sites that keep sign-in tokens outside cookies.
-- Tab assignments restored after a browser restart from a local URL snapshot.
-- Default container that represents the browser's original cookie jar.
-- Manage containers, site assignments, grouping, and tab indicators on an options page.
+BURPEE-SWITCH makes multiple accounts feel like separate browsers, without opening separate
+browser profiles.
+
+- **Multiple accounts in one window** — keep work, personal, and client logins open side by side.
+- **Simple container tabs** — open a tab in Default, Personal, Work, or any container you create.
+- **Separate cookies** — each container gets its own saved session, restored when you switch tabs.
+- **Optional login-storage isolation** — also separate `localStorage` for sites that keep sign-in
+  tokens outside cookies.
+- **Instant switching** — after a tab has loaded, switching to it does not reload the page.
+- **Restore after restart** — tabs reopen in the containers you assigned.
+- **Site rules** — send a domain to a specific container automatically.
+- **Clear visual labels** — colored dots, titles, tab groups, or a page edge show which account a
+  tab belongs to.
+- **Burp Suite support** — optional request headers and a highlighter JAR make traffic easy to
+  identify.
+- **Stays local** — no accounts, cloud, analytics, or telemetry.
 
 ## Install (unpacked)
 
