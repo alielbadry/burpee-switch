@@ -13,9 +13,6 @@ cookies, color, and label.
 > browser's single cookie jar, and sites such as Google, LinkedIn, and X can invalidate a session
 > when they see a missing or stale cookie. This is a known limitation, and we are actively working
 > on a fix. Until then, use separate browser profiles for accounts you need to keep signed in.
->
-> You can also try BURPEE-SWITCH in a browser you do not use every day or for important accounts,
-> so any sign-out only affects that browser.
 
 ## Features
 
