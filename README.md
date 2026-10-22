@@ -8,6 +8,12 @@ cookies, color, and label.
 
 ![BURPEE-SWITCH usage demo](docs/demo.gif)
 
+> [!WARNING]
+> BURPEE-SWITCH may sign you out of your other accounts when you switch containers. It swaps the
+> browser's single cookie jar, and sites such as Google, LinkedIn, and X can invalidate a session
+> when they see a missing or stale cookie. This is a known limitation, and we are actively working
+> on a fix. Until then, use separate browser profiles for accounts you need to keep signed in.
+
 ## Features
 
 - **Multiple accounts in one window** — keep work, personal, and client logins open side by side.
