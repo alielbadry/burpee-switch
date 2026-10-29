@@ -864,9 +864,15 @@ async function handleTabUpdated(tabId, changeInfo, tab) {
       await ready();
       if (isWebUrl(tab.url)) {
         const meta = await getMeta();
+        const live = meta.liveContainerId || "default";
+        const assigned = (await getTabContainer(tabId)) || "default";
         const previous = await getTabLoadedJar(tabId);
         if (changeInfo.status === "loading" || !previous) {
-          await setTabLoadedJar(tabId, meta.liveContainerId || "default");
+          if (assigned === live) {
+            await setTabLoadedJar(tabId, live);
+          } else {
+            await removeTabLoadedJar(tabId);
+          }
         }
         const origin = storageOrigin(tab.url);
         if (changeInfo.status === "loading") {
