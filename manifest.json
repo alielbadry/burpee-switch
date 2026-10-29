@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BURPEE-SWITCH",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "BURPEE-SWITCH Multi-account and container management for Chromium-based browsers",
   "minimum_chrome_version": "119",
   "permissions": [

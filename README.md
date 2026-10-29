@@ -60,8 +60,9 @@ containers** in the popup for names, colors, icons, site rules, and tab indicato
 
 - One container is active at a time. Keep one tab per site per container to avoid overlapping
   background requests.
-- A tab may reload when its container's cookie jar changes. You can turn off automatic reloads under
-  **Settings → Behavior** if you prefer to refresh manually.
+- A tab may reload when its container's cookie jar changes. You can turn off automatic reloads or
+  **pause container switching** entirely under **Settings → Behavior** to stop all swaps and
+  reloads; containers then act as visual labels only.
 - This is a convenience layer, not a security boundary. For strict isolation, use separate browser
   profiles.
 - Incognito windows are not supported.

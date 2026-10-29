@@ -19,6 +19,7 @@ const els = {
   toolbarIcon: document.getElementById("toolbarIcon"),
   burpHeaders: document.getElementById("burpHeaders"),
   autoReload: document.getElementById("autoReload"),
+  paused: document.getElementById("paused"),
   applyMarkersBtn: document.getElementById("applyMarkersBtn"),
   toast: document.getElementById("toast")
 };
@@ -230,6 +231,7 @@ function render() {
   els.toolbarIcon.checked = Boolean(state.settings.toolbarIcon);
   els.burpHeaders.checked = Boolean(state.settings.burpHeaders);
   els.autoReload.checked = state.settings.autoReload !== false;
+  els.paused.checked = Boolean(state.settings.paused);
   renderContainers();
   renderRules();
 }
@@ -331,7 +333,8 @@ async function saveVisualSettings() {
       pageEdge: els.pageEdge.checked,
       toolbarIcon: els.toolbarIcon.checked,
       burpHeaders: els.burpHeaders.checked,
-      autoReload: els.autoReload.checked
+      autoReload: els.autoReload.checked,
+      paused: els.paused.checked
     });
     showToast("Behavior updated");
   } catch (error) {
@@ -344,6 +347,7 @@ els.pageEdge.addEventListener("change", () => void saveVisualSettings());
 els.toolbarIcon.addEventListener("change", () => void saveVisualSettings());
 els.burpHeaders.addEventListener("change", () => void saveVisualSettings());
 els.autoReload.addEventListener("change", () => void saveVisualSettings());
+els.paused.addEventListener("change", () => void saveVisualSettings());
 
 els.applyMarkersBtn.addEventListener("click", async () => {
   try {

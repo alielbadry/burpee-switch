@@ -616,7 +616,7 @@ async function swapSiteStorage(tab, containerId) {
 
 async function maybeSwapStorageForActiveTab(tabId) {
   const settings = await getSettings();
-  if (settings.autoReload === false) return false;
+  if (settings.autoReload === false || settings.paused) return false;
   const tab = await chrome.tabs.get(tabId).catch(() => null);
   if (!tab || !tab.active || tab.status !== "complete" || tab.incognito) return false;
   const win = await chrome.windows.get(tab.windowId).catch(() => null);
@@ -710,6 +710,11 @@ async function activateTab(tabId) {
   const container = containerById(containers, assigned);
   const win = await chrome.windows.get(tab.windowId).catch(() => null);
   const focused = Boolean(tab.active && win && win.focused);
+
+  if (settings.paused) {
+    await applyTabVisuals(tab, container);
+    return;
+  }
 
   if (focused && isWebUrl(tab.url)) {
     const meta = await getMeta();
@@ -954,11 +959,14 @@ async function openTabInContainer({ containerId, url, windowId }) {
   const tab = await chrome.tabs.create(createProperties);
   await setTabOverride(tab.id, containerId);
   await assignTab(tab.id, containerId);
-  const previousLive = (await getMeta()).liveContainerId || "default";
-  if (url && (await isStorageIsolated(url))) {
-    await ensureStorageOwner(storageOrigin(url), previousLive);
+  const settings = await getSettings();
+  if (!settings.paused) {
+    const previousLive = (await getMeta()).liveContainerId || "default";
+    if (url && (await isStorageIsolated(url))) {
+      await ensureStorageOwner(storageOrigin(url), previousLive);
+    }
+    await swapLiveContainer(containerId);
   }
-  await swapLiveContainer(containerId);
 
   if (url) {
     await chrome.tabs.update(tab.id, { url, active: true });
@@ -1137,13 +1145,14 @@ async function setGrouping({ enabled }) {
   });
 }
 
-async function setVisualSettings({ tabMarker, pageEdge, toolbarIcon, burpHeaders, autoReload }) {
+async function setVisualSettings({ tabMarker, pageEdge, toolbarIcon, burpHeaders, autoReload, paused }) {
   const patch = {};
   if (TAB_MARKERS.includes(tabMarker)) patch.tabMarker = tabMarker;
   if (typeof pageEdge === "boolean") patch.pageEdge = pageEdge;
   if (typeof toolbarIcon === "boolean") patch.toolbarIcon = toolbarIcon;
   if (typeof burpHeaders === "boolean") patch.burpHeaders = burpHeaders;
   if (typeof autoReload === "boolean") patch.autoReload = autoReload;
+  if (typeof paused === "boolean") patch.paused = paused;
   if (Object.keys(patch).length === 0) return getSettings();
   return queueSettingsApply(async () => {
     await setSettings(patch);
