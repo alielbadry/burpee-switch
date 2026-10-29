@@ -18,6 +18,7 @@ const els = {
   pageEdge: document.getElementById("pageEdge"),
   toolbarIcon: document.getElementById("toolbarIcon"),
   burpHeaders: document.getElementById("burpHeaders"),
+  autoReload: document.getElementById("autoReload"),
   applyMarkersBtn: document.getElementById("applyMarkersBtn"),
   toast: document.getElementById("toast")
 };
@@ -228,6 +229,7 @@ function render() {
   els.pageEdge.checked = Boolean(state.settings.pageEdge);
   els.toolbarIcon.checked = Boolean(state.settings.toolbarIcon);
   els.burpHeaders.checked = Boolean(state.settings.burpHeaders);
+  els.autoReload.checked = state.settings.autoReload !== false;
   renderContainers();
   renderRules();
 }
@@ -328,9 +330,10 @@ async function saveVisualSettings() {
       tabMarker: els.tabMarker.value,
       pageEdge: els.pageEdge.checked,
       toolbarIcon: els.toolbarIcon.checked,
-      burpHeaders: els.burpHeaders.checked
+      burpHeaders: els.burpHeaders.checked,
+      autoReload: els.autoReload.checked
     });
-    showToast("Tab indicators updated");
+    showToast("Behavior updated");
   } catch (error) {
     showToast(error.message, true);
   }
@@ -340,6 +343,7 @@ els.tabMarker.addEventListener("change", () => void saveVisualSettings());
 els.pageEdge.addEventListener("change", () => void saveVisualSettings());
 els.toolbarIcon.addEventListener("change", () => void saveVisualSettings());
 els.burpHeaders.addEventListener("change", () => void saveVisualSettings());
+els.autoReload.addEventListener("change", () => void saveVisualSettings());
 
 els.applyMarkersBtn.addEventListener("click", async () => {
   try {

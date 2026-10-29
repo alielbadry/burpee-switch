@@ -615,6 +615,8 @@ async function swapSiteStorage(tab, containerId) {
 }
 
 async function maybeSwapStorageForActiveTab(tabId) {
+  const settings = await getSettings();
+  if (settings.autoReload === false) return false;
   const tab = await chrome.tabs.get(tabId).catch(() => null);
   if (!tab || !tab.active || tab.status !== "complete" || tab.incognito) return false;
   const win = await chrome.windows.get(tab.windowId).catch(() => null);
@@ -703,6 +705,7 @@ async function activateTab(tabId) {
   const tab = await chrome.tabs.get(tabId).catch(() => null);
   if (!tab || tab.incognito) return;
   const containers = await getContainers();
+  const settings = await getSettings();
   const assigned = (await getTabContainer(tabId)) || "default";
   const container = containerById(containers, assigned);
   const win = await chrome.windows.get(tab.windowId).catch(() => null);
@@ -728,7 +731,9 @@ async function activateTab(tabId) {
         ? !(await storageLoadMatches(tabId, origin, container.id))
         : false;
 
-    if (startupNeedsReload.has(tabId)) {
+    if (settings.autoReload === false) {
+      startupNeedsReload.delete(tabId);
+    } else if (startupNeedsReload.has(tabId)) {
       startupNeedsReload.delete(tabId);
       if (isolated) {
         await reloadTabForStorage(tabId, origin, container.id, true);
@@ -1132,12 +1137,13 @@ async function setGrouping({ enabled }) {
   });
 }
 
-async function setVisualSettings({ tabMarker, pageEdge, toolbarIcon, burpHeaders }) {
+async function setVisualSettings({ tabMarker, pageEdge, toolbarIcon, burpHeaders, autoReload }) {
   const patch = {};
   if (TAB_MARKERS.includes(tabMarker)) patch.tabMarker = tabMarker;
   if (typeof pageEdge === "boolean") patch.pageEdge = pageEdge;
   if (typeof toolbarIcon === "boolean") patch.toolbarIcon = toolbarIcon;
   if (typeof burpHeaders === "boolean") patch.burpHeaders = burpHeaders;
+  if (typeof autoReload === "boolean") patch.autoReload = autoReload;
   if (Object.keys(patch).length === 0) return getSettings();
   return queueSettingsApply(async () => {
     await setSettings(patch);
